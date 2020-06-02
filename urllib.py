@@ -5,11 +5,8 @@ Adapted for Micropython by Alex Cowan <acowan@gmail.com>
 Includes some elements from the original urllib and urlencode libraries for Python
 """
 
-import socket
-try:
-    import ussl as ssl
-except:
-    import ssl
+import usocket as socket
+
 
 class URLOpener:
     def __init__(self, url, post_data={}):
@@ -24,6 +21,10 @@ class URLOpener:
             s.settimeout(5)
             s.connect(addr)
         else:
+            try:
+                import ussl as ssl
+            except:
+                import ssl            
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_SEC)
             sock.settimeout(5)
             s = ssl.wrap_socket(sock)
